@@ -19,7 +19,6 @@
     BOOL goodLastChar;
 }
 
--(void)setResultWithNumber:(int)theNumber;
 @property (weak, nonatomic) IBOutlet UILabel *screenOutput;
 @property (weak, nonatomic) IBOutlet UILabel *resultOutput;
 @property (weak, nonatomic) IBOutlet UIButton *clearB;
@@ -30,6 +29,7 @@
 -(IBAction)clearButton:(UIButton *)sender;
 -(IBAction)deleteButton:(UIButton *)sender;
 -(IBAction)dotButton:(UIButton *)sender;
+-(IBAction)ansButton:(UIButton *)sender;
 
 @end
 
