@@ -103,7 +103,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pcc-9A-q2m">
-                                <rect key="frame" x="255" y="518" width="37" height="30"/>
+                                <rect key="frame" x="23" y="518" width="269" height="30"/>
                                 <state key="normal" title="Enter">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -165,23 +165,8 @@
                                     <action selector="operatorButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="z3E-2B-SEi"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="13" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nRk-tn-kOq">
-                                <rect key="frame" x="258" y="462" width="30" height="30"/>
-                                <state key="normal">
-                                    <attributedString key="attributedTitle">
-                                        <fragment content="/">
-                                            <attributes>
-                                                <font key="NSFont" size="15" name="HelveticaNeue-Bold"/>
-                                            </attributes>
-                                        </fragment>
-                                    </attributedString>
-                                </state>
-                                <connections>
-                                    <action selector="operatorButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="22K-sG-TiY"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5qh-QM-4hd">
-                                <rect key="frame" x="16" y="231" width="37" height="30"/>
+                                <rect key="frame" x="16" y="269" width="37" height="30"/>
                                 <state key="normal" title="Clear">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -205,17 +190,23 @@
                                     <action selector="ansButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Sz4-rT-Wyw"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CMv-pC-UgU">
+                            <button opaque="NO" tag="15" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CMv-pC-UgU">
                                 <rect key="frame" x="93" y="269" width="30" height="30"/>
                                 <state key="normal" title="(">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="parenthesisButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="NYd-eU-yxQ"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k2D-NY-jtw">
+                            <button opaque="NO" tag="16" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k2D-NY-jtw">
                                 <rect key="frame" x="180" y="269" width="30" height="30"/>
                                 <state key="normal" title=")">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="parenthesisButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="1fp-3y-VM2"/>
+                                </connections>
                             </button>
                             <button opaque="NO" tag="14" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wm3-4z-4f4">
                                 <rect key="frame" x="262" y="269" width="31" height="30"/>
@@ -224,6 +215,21 @@
                                 </state>
                                 <connections>
                                     <action selector="operatorButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="2fH-vl-E45"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="13" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nRk-tn-kOq">
+                                <rect key="frame" x="258" y="468" width="30" height="30"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="/">
+                                            <attributes>
+                                                <font key="NSFont" size="15" name="HelveticaNeue-Bold"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </state>
+                                <connections>
+                                    <action selector="operatorButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="22K-sG-TiY"/>
                                 </connections>
                             </button>
                         </subviews>

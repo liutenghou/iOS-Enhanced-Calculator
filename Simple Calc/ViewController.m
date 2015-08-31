@@ -28,6 +28,20 @@
 
 //numbers
 -(IBAction)numberPressed:(UIButton *)sender{
+    
+    if([self overCharLimit]){
+        return;
+    }
+    //check if last input is )
+    if (( workingOn != (id)[NSNull null] || workingOn.length != 0 )){
+        if([[self getLastInput] isEqualToString:@")"]){
+            [workingOn appendString:@"*"];
+            self.screenOutput.text = workingOn;
+        }
+    
+    }
+
+    
     NSInteger tag = sender.tag;
     //convert to string
     NSString *tagString = [NSString stringWithFormat:@"%li", tag];
@@ -38,8 +52,50 @@
     self.screenOutput.text = workingOn;
 }
 
+//parenthesis
+-(IBAction)parenthesisButton:(UIButton *)sender{
+    if([self overCharLimit]){
+        return;
+    }
+    
+    //15 left, 16 right
+    if(sender.tag == 15 && closedParenthesis){
+        
+        //add * to previous number if starting (, skip if empty
+        if (( workingOn != (id)[NSNull null] || workingOn.length != 0 )){
+            [self checkLastInput];
+            if (goodLastChar){
+                [workingOn appendString:@"*"];
+                self.screenOutput.text = workingOn;
+            }
+        }
+
+        [workingOn appendString:@"("];
+        self.screenOutput.text = workingOn;
+        closedParenthesis = FALSE;
+    }else if(sender.tag == 16 && !closedParenthesis){
+        //if first char, do nothing
+        if (( workingOn == (id)[NSNull null] || workingOn.length == 0 )){
+            return;
+        }
+        
+        [self checkLastInput];
+        if (goodLastChar){
+            closedParenthesis = TRUE;
+            
+            [workingOn appendString:@")"];
+            self.screenOutput.text = workingOn;
+        }
+        
+    }
+}
+
 //operators
 - (IBAction)operatorButton:(UIButton *)sender {
+    if([self overCharLimit]){
+        return;
+    }
+    
     //operator cannot be first, except for negative
     if (( workingOn == (id)[NSNull null] || workingOn.length == 0 )){
         if(sender.tag != 11){
@@ -109,6 +165,7 @@
        ||[lastInput isEqualToString:@"*"]
        ||[lastInput isEqualToString:@"/"]
        ||[lastInput isEqualToString:@"^"]
+       ||[lastInput isEqualToString:@"("]
        ){
         goodLastChar = FALSE;
     } else {
@@ -131,6 +188,10 @@
     self.resultOutput.text = @"";
     workingOnFormula = nil;
     resultFormula = nil;
+    lastInput = nil;
+    lastResult = nil;
+    goodLastChar = FALSE;
+    closedParenthesis = TRUE;
     
     
 }
@@ -145,6 +206,9 @@
 }
 
 - (IBAction)dotButton:(id)sender {
+    if([self overCharLimit]){
+        return;
+    }
     //if dot button is first pressed, add zero
     if(workingOn.length == 0){
         [workingOn appendString:@"0"];
@@ -176,6 +240,11 @@
         return;
     }
     
+    //if parenthesis are not closed
+    if (!closedParenthesis){
+        return;
+    }
+    
     //if last input is dot
     if([[self getLastInput] isEqualToString:@"."]){
         [workingOn appendString:@"0"];
@@ -185,7 +254,15 @@
     //workingOnFormula is NSExpression
     workingOnFormula = [NSExpression expressionWithFormat:workingOn];
     resultFormula = [workingOnFormula expressionValueWithObject:nil context:nil];
-    self.resultOutput.text = [NSString stringWithFormat:@"%f",[resultFormula floatValue]];
+    self.resultOutput.text = [NSString stringWithFormat:@"%@",[resultFormula stringValue]];
+}
+-(BOOL)overCharLimit{
+    //limit number of characters to 20
+    if([workingOn length] >= 18){
+        return TRUE;
+    }else{
+        return FALSE;
+    }
 }
 
 - (void)viewDidLoad {
@@ -195,7 +272,7 @@
     lastInput = [[NSString alloc] init];
     lastResult = [[NSNumber alloc] init];
     goodLastChar = FALSE;
-    
+    closedParenthesis = TRUE;
     
     [[_clearB layer] setBorderWidth:2.0f];
     [[_clearB layer] setBorderColor:[UIColor greenColor].CGColor];

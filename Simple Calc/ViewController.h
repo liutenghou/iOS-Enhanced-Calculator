@@ -17,6 +17,7 @@
     NSString *lastInput;
     NSNumber *lastResult;
     BOOL goodLastChar;
+    BOOL closedParenthesis;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *screenOutput;
@@ -30,6 +31,7 @@
 -(IBAction)deleteButton:(UIButton *)sender;
 -(IBAction)dotButton:(UIButton *)sender;
 -(IBAction)ansButton:(UIButton *)sender;
+-(IBAction)parenthesisButton:(UIButton *)sender;
 
 @end
 
