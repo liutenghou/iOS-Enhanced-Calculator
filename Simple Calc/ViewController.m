@@ -17,7 +17,6 @@
  implement ans button for last answer
  implement brackets
  
- 
  operator cannot be first (x)
  operator cannot be last (x)
  dot cannot be last (x)
@@ -38,10 +37,8 @@
             [workingOn appendString:@"*"];
             self.screenOutput.text = workingOn;
         }
-    
     }
 
-    
     NSInteger tag = sender.tag;
     //convert to string
     NSString *tagString = [NSString stringWithFormat:@"%li", tag];
@@ -143,7 +140,7 @@
                 [workingOn appendString:@"/"];
                 break;
             case 14:
-                [workingOn appendString:@"^"];
+                [workingOn appendString:@"**"];
                 break;
             default:
                 break;
@@ -155,7 +152,6 @@
 -(void)checkLastInput{
     //make sure this is never called if nothing is in workingOn
     if (( workingOn == (id)[NSNull null] || workingOn.length == 0 )){
-        NSLog(@"workingOn is empty");
         return;
     }
 
@@ -176,7 +172,6 @@
 -(NSString *)getLastInput{
     //make sure this is never called if nothing is in workingOn
     if (( workingOn == (id)[NSNull null] || workingOn.length == 0 )){
-        NSLog(@"workingOn is empty");
         return @"";
     }
     return [workingOn substringFromIndex:[workingOn length]-1];
@@ -192,6 +187,7 @@
     lastResult = nil;
     goodLastChar = FALSE;
     closedParenthesis = TRUE;
+    currentCharIsDotted = FALSE;
     
     
 }
@@ -209,6 +205,12 @@
     if([self overCharLimit]){
         return;
     }
+    //TODO: check input for boundaries
+/*    [self checkLastInput];
+    if (!goodLastChar){
+        return;
+    }
+  */
     //if dot button is first pressed, add zero
     if(workingOn.length == 0){
         [workingOn appendString:@"0"];
@@ -216,11 +218,20 @@
     
     [workingOn appendString:@"."];
     self.screenOutput.text = workingOn;
+
+    /*if(!currentCharIsDotted){
+                currentCharIsDotted = TRUE;
+    }*/
+    
 }
 
 - (IBAction)ansButton:(UIButton *)sender {
     //if already empty
     if (workingOn == (id)[NSNull null] || workingOn.length == 0 ){
+        return;
+    }
+    //TODO: if ans if inf
+    if([self.resultOutput.text containsString:@"\u221E"]){
         return;
     }
     
@@ -230,32 +241,42 @@
 
 //Enter Button
 - (IBAction)buttonEnter:(id)sender {
-    //if nothing is entered for input
-    if (workingOn == (id)[NSNull null] || workingOn.length == 0 ){
-        return;
-    }
-    //TODO:if last input is operator
-    [self checkLastInput];
-    if(!goodLastChar){
-        return;
-    }
     
-    //if parenthesis are not closed
-    if (!closedParenthesis){
-        return;
+    @try{
+        //if nothing is entered for input
+        if (workingOn == (id)[NSNull null] || workingOn.length == 0 ){
+            return;
+        }
+        //TODO:if last input is operator
+        [self checkLastInput];
+        if(!goodLastChar){
+            return;
+        }
+        
+        //if parenthesis are not closed
+        if (!closedParenthesis){
+            return;
+        }
+        
+        //if last input is dot
+        if([[self getLastInput] isEqualToString:@"."]){
+            [workingOn appendString:@"0"];
+            self.screenOutput.text = workingOn;
+        }
+        
+        //workingOnFormula is NSExpression
+        workingOnFormula = [NSExpression expressionWithFormat:workingOn];
+        resultFormula = [workingOnFormula expressionValueWithObject:nil context:nil];
+        
+        self.resultOutput.text = [formatter stringForObjectValue:resultFormula];
+        
+    }@catch(NSException *e){
+        [self clearButton:nil];
+    }@finally{
+        
     }
-    
-    //if last input is dot
-    if([[self getLastInput] isEqualToString:@"."]){
-        [workingOn appendString:@"0"];
-        self.screenOutput.text = workingOn;
-    }
-    
-    //workingOnFormula is NSExpression
-    workingOnFormula = [NSExpression expressionWithFormat:workingOn];
-    resultFormula = [workingOnFormula expressionValueWithObject:nil context:nil];
-    self.resultOutput.text = [NSString stringWithFormat:@"%@",[resultFormula stringValue]];
 }
+
 -(BOOL)overCharLimit{
     //limit number of characters to 20
     if([workingOn length] >= 18){
@@ -273,9 +294,16 @@
     lastResult = [[NSNumber alloc] init];
     goodLastChar = FALSE;
     closedParenthesis = TRUE;
+    currentCharIsDotted = FALSE;
     
-    [[_clearB layer] setBorderWidth:2.0f];
+    //formatted output
+    formatter = [[NSNumberFormatter alloc] init];
+    //[formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    [formatter setMaximumFractionDigits:4];
+    
+    [[_clearB layer] setBorderWidth:5.0f];
     [[_clearB layer] setBorderColor:[UIColor greenColor].CGColor];
+    [[_clearB layer] setMasksToBounds:YES];
 }
 
 - (void)didReceiveMemoryWarning {

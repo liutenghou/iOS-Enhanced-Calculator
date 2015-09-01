@@ -18,6 +18,8 @@
     NSNumber *lastResult;
     BOOL goodLastChar;
     BOOL closedParenthesis;
+    BOOL currentCharIsDotted;
+    NSNumberFormatter *formatter;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *screenOutput;
