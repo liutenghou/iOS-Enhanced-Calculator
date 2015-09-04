@@ -19,12 +19,12 @@
     BOOL goodLastChar;
     BOOL closedParenthesis;
     BOOL currentCharIsDotted;
+    BOOL clicked;
     NSNumberFormatter *formatter;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *screenOutput;
 @property (weak, nonatomic) IBOutlet UILabel *resultOutput;
-@property (weak, nonatomic) IBOutlet UIButton *clearB;
 
 //methods
 -(IBAction)numberPressed:(UIButton *)sender;

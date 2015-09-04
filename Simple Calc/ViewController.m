@@ -12,17 +12,17 @@
 @end
 
 @implementation ViewController
-/*TODO: border cases
- add last input (x)
- implement ans button for last answer
- implement brackets
+/*
+ BORDER CASES
  
+ add last input (x)
+ implement ans button for last answer (x)
+ implement brackets (x)
  operator cannot be first (x)
  operator cannot be last (x)
  dot cannot be last (x)
  operator and dot cannot be consecutive (x)
- deal with really large numbers
-
+ deal with really large numbers (x)
 */
 
 //numbers
@@ -31,31 +31,34 @@
     if([self overCharLimit]){
         return;
     }
-    //check if last input is )
-    if (( workingOn != (id)[NSNull null] || workingOn.length != 0 )){
-        if([[self getLastInput] isEqualToString:@")"]){
-            [workingOn appendString:@"*"];
-            self.screenOutput.text = workingOn;
-        }
+    
+    //add * if number coming after )
+    if([[self getLastInput] isEqualToString:@")"]){
+        [workingOn appendString:@"*"];
+        self.screenOutput.text = workingOn;
     }
-
+    
     NSInteger tag = sender.tag;
     //convert to string
     NSString *tagString = [NSString stringWithFormat:@"%li", tag];
     
+    //button animation
+    [self animateButtonPress:sender];
     //append
     [workingOn appendString:tagString];
     //update output
     self.screenOutput.text = workingOn;
 }
 
+
 //parenthesis
 -(IBAction)parenthesisButton:(UIButton *)sender{
+    
     if([self overCharLimit]){
         return;
     }
-    
-    //15 left, 16 right
+
+    //15 = left paren, 16 = right paren
     if(sender.tag == 15 && closedParenthesis){
         
         //add * to previous number if starting (, skip if empty
@@ -66,6 +69,9 @@
                 self.screenOutput.text = workingOn;
             }
         }
+        closedParenthesis = FALSE;
+        //button animation
+        [self animateButtonPress:sender];
 
         [workingOn appendString:@"("];
         self.screenOutput.text = workingOn;
@@ -80,6 +86,9 @@
         if (goodLastChar){
             closedParenthesis = TRUE;
             
+            //button animation
+            [self animateButtonPress:sender];
+
             [workingOn appendString:@")"];
             self.screenOutput.text = workingOn;
         }
@@ -98,11 +107,14 @@
         if(sender.tag != 11){
             return;
         }else{
+            //button animation
+            [self animateButtonPress:sender];
+            
             [workingOn appendString:@"-"];
             self.screenOutput.text = workingOn;
         }
+    //not first input
     } else{
-        //not first input
         //if last input is dot
         if([[self getLastInput] isEqualToString:@"."]){
             [workingOn appendString:@"0"];
@@ -145,9 +157,13 @@
             default:
                 break;
         }
+        //button animation
+        [self animateButtonPress:sender];
+
         self.screenOutput.text = workingOn;
     }
 }
+
 //check last input
 -(void)checkLastInput{
     //make sure this is never called if nothing is in workingOn
@@ -168,6 +184,7 @@
         goodLastChar = TRUE;
     }
 }
+
 //get last char input
 -(NSString *)getLastInput{
     //make sure this is never called if nothing is in workingOn
@@ -178,6 +195,11 @@
 }
 
 -(IBAction)clearButton:(UIButton *)sender{
+    //if already empty
+    if (workingOn == (id)[NSNull null] || workingOn.length == 0 ){
+        return;
+    }
+    
     [workingOn setString:@""];
     self.screenOutput.text = @"";
     self.resultOutput.text = @"";
@@ -188,6 +210,8 @@
     goodLastChar = FALSE;
     closedParenthesis = TRUE;
     currentCharIsDotted = FALSE;
+    //button animation
+    [self animateButtonPress:sender];
     
     
 }
@@ -197,6 +221,29 @@
         return;
     }
     
+    //if deleting a parenthesis, set closed parenthesis
+    if([[self getLastInput] isEqualToString:@")"]){
+        closedParenthesis = FALSE;
+    }else if([[self getLastInput] isEqualToString:@"("]){
+        closedParenthesis = TRUE;
+    }
+    
+    //last char, reset
+    if (workingOn.length == 1){
+        self.screenOutput.text = @"";
+        self.resultOutput.text = @"";
+        workingOnFormula = nil;
+        resultFormula = nil;
+        lastInput = nil;
+        lastResult = nil;
+        goodLastChar = FALSE;
+        closedParenthesis = TRUE;
+        currentCharIsDotted = FALSE;
+    }
+    
+    //button animation
+    [self animateButtonPress:sender];
+    
     [workingOn deleteCharactersInRange:NSMakeRange([workingOn length]-1, 1)];
     self.screenOutput.text = workingOn;
 }
@@ -205,24 +252,22 @@
     if([self overCharLimit]){
         return;
     }
-    //TODO: check input for boundaries
-/*    [self checkLastInput];
-    if (!goodLastChar){
+   
+    if([[self getLastInput] isEqualToString:@"."]){
         return;
     }
-  */
+        
     //if dot button is first pressed, add zero
     if(workingOn.length == 0){
         [workingOn appendString:@"0"];
     }
     
+    //button animation
+    [self animateButtonPress:sender];
+
+    
     [workingOn appendString:@"."];
     self.screenOutput.text = workingOn;
-
-    /*if(!currentCharIsDotted){
-                currentCharIsDotted = TRUE;
-    }*/
-    
 }
 
 - (IBAction)ansButton:(UIButton *)sender {
@@ -230,11 +275,15 @@
     if (workingOn == (id)[NSNull null] || workingOn.length == 0 ){
         return;
     }
+
     //TODO: if ans if inf
     if([self.resultOutput.text containsString:@"\u221E"]){
         return;
     }
     
+    //button animation
+    [self animateButtonPress:sender];
+
     [workingOn setString:self.resultOutput.text];
     self.screenOutput.text = workingOn;
 }
@@ -247,6 +296,7 @@
         if (workingOn == (id)[NSNull null] || workingOn.length == 0 ){
             return;
         }
+        
         //TODO:if last input is operator
         [self checkLastInput];
         if(!goodLastChar){
@@ -268,6 +318,14 @@
         workingOnFormula = [NSExpression expressionWithFormat:workingOn];
         resultFormula = [workingOnFormula expressionValueWithObject:nil context:nil];
         
+        //if answer is already shown
+        if([self.resultOutput.text isEqual:[formatter stringForObjectValue:resultFormula]]){
+            return;
+        }
+        
+        //button animation
+        [self animateButtonPress:sender];
+        
         self.resultOutput.text = [formatter stringForObjectValue:resultFormula];
         
     }@catch(NSException *e){
@@ -286,6 +344,22 @@
     }
 }
 
+-(void)animateButtonPress:(UIButton *)sender{
+        //animates button 25 pixels right and 25 pixels down. Customize
+        CGRect newFrame = CGRectMake(sender.frame.origin.x-2, sender.frame.origin.y-2, sender.frame.size.width, sender.frame.size.height);
+
+        [UIView animateWithDuration:0.1f
+                              delay:0.0f
+                            options: UIViewAnimationOptionCurveLinear
+                         animations:^{
+                             [sender setFrame:newFrame];
+                             //[sender setFrame:originalFrame];
+                         }
+                         completion:nil
+         ];
+        clicked = YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     workingOn = [[NSMutableString alloc] init];
@@ -295,15 +369,14 @@
     goodLastChar = FALSE;
     closedParenthesis = TRUE;
     currentCharIsDotted = FALSE;
+    clicked = FALSE;
     
     //formatted output
     formatter = [[NSNumberFormatter alloc] init];
-    //[formatter setNumberStyle:NSNumberFormatterDecimalStyle];
     [formatter setMaximumFractionDigits:4];
     
-    [[_clearB layer] setBorderWidth:5.0f];
-    [[_clearB layer] setBorderColor:[UIColor greenColor].CGColor];
-    [[_clearB layer] setMasksToBounds:YES];
+    //background
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundImage"]];    
 }
 
 - (void)didReceiveMemoryWarning {
