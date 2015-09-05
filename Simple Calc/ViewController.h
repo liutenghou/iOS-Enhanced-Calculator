@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import "PaddedLabel.h"
 
 @interface ViewController : UIViewController{
     //class variables
@@ -23,8 +24,8 @@
     NSNumberFormatter *formatter;
 }
 
-@property (weak, nonatomic) IBOutlet UILabel *screenOutput;
-@property (weak, nonatomic) IBOutlet UILabel *resultOutput;
+@property (weak, nonatomic) IBOutlet PaddedLabel *screenOutput;
+@property (weak, nonatomic) IBOutlet PaddedLabel *resultOutput;
 
 //methods
 -(IBAction)numberPressed:(UIButton *)sender;

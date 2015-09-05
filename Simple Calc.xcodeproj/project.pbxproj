@@ -14,6 +14,7 @@
 		BC1B47A01B8BCD9500F0E977 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC1B479F1B8BCD9500F0E977 /* Images.xcassets */; };
 		BC1B47A31B8BCD9500F0E977 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC1B47A11B8BCD9500F0E977 /* LaunchScreen.xib */; };
 		BC1B47AF1B8BCD9500F0E977 /* Simple_CalcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1B47AE1B8BCD9500F0E977 /* Simple_CalcTests.m */; };
+		BC362CB21B9A065900A226D9 /* PaddedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC362CB11B9A065900A226D9 /* PaddedLabel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		BC1B47A81B8BCD9500F0E977 /* Simple CalcTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Simple CalcTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC1B47AD1B8BCD9500F0E977 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC1B47AE1B8BCD9500F0E977 /* Simple_CalcTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Simple_CalcTests.m; sourceTree = "<group>"; };
+		BC362CB01B9A065900A226D9 /* PaddedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaddedLabel.h; sourceTree = "<group>"; };
+		BC362CB11B9A065900A226D9 /* PaddedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaddedLabel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +88,8 @@
 				BC1B47971B8BCD9500F0E977 /* AppDelegate.m */,
 				BC1B47991B8BCD9500F0E977 /* ViewController.h */,
 				BC1B479A1B8BCD9500F0E977 /* ViewController.m */,
+				BC362CB01B9A065900A226D9 /* PaddedLabel.h */,
+				BC362CB11B9A065900A226D9 /* PaddedLabel.m */,
 				BC1B479C1B8BCD9500F0E977 /* Main.storyboard */,
 				BC1B479F1B8BCD9500F0E977 /* Images.xcassets */,
 				BC1B47A11B8BCD9500F0E977 /* LaunchScreen.xib */,
@@ -221,6 +226,7 @@
 			files = (
 				BC1B479B1B8BCD9500F0E977 /* ViewController.m in Sources */,
 				BC1B47981B8BCD9500F0E977 /* AppDelegate.m in Sources */,
+				BC362CB21B9A065900A226D9 /* PaddedLabel.m in Sources */,
 				BC1B47951B8BCD9500F0E977 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -412,6 +418,7 @@
 				BC1B47B41B8BCD9500F0E977 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BC1B47B51B8BCD9500F0E977 /* Build configuration list for PBXNativeTarget "Simple CalcTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +427,7 @@
 				BC1B47B71B8BCD9500F0E977 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
