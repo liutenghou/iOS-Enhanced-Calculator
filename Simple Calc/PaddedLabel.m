@@ -11,7 +11,7 @@
 @implementation PaddedLabel
 
 - (void)drawTextInRect:(CGRect)rect {
-    UIEdgeInsets insets = {0, 5.0f, 0, 5.0f};
+    UIEdgeInsets insets = {0, 0, 0, 5.0f};
     [super drawTextInRect:UIEdgeInsetsInsetRect(rect, insets)];
 }
 

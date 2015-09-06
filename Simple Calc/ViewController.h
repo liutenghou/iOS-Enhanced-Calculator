@@ -14,7 +14,7 @@
     //class variables
     NSMutableString *workingOn;
     NSExpression *workingOnFormula;
-    NSNumber *resultFormula;
+    NSNumber *result;
     NSString *lastInput;
     NSNumber *lastResult;
     BOOL goodLastChar;
@@ -25,7 +25,7 @@
 }
 
 @property (weak, nonatomic) IBOutlet PaddedLabel *screenOutput;
-@property (weak, nonatomic) IBOutlet PaddedLabel *resultOutput;
+@property (weak, nonatomic) IBOutlet PaddedLabel *resultScreenOutput;
 
 //methods
 -(IBAction)numberPressed:(UIButton *)sender;

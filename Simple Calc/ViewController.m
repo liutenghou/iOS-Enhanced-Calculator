@@ -202,9 +202,8 @@
     
     [workingOn setString:@""];
     self.screenOutput.text = @"";
-    self.resultOutput.text = @"";
-    workingOnFormula = nil;
-    resultFormula = nil;
+    self.resultScreenOutput.text = @"";
+    result = nil;
     lastInput = nil;
     lastResult = nil;
     goodLastChar = FALSE;
@@ -231,9 +230,8 @@
     //last char, reset
     if (workingOn.length == 1){
         self.screenOutput.text = @"";
-        self.resultOutput.text = @"";
-        workingOnFormula = nil;
-        resultFormula = nil;
+        self.resultScreenOutput.text = @"";
+        result = nil;
         lastInput = nil;
         lastResult = nil;
         goodLastChar = FALSE;
@@ -277,14 +275,14 @@
     }
 
     //TODO: if ans if inf
-    if([self.resultOutput.text containsString:@"\u221E"]){
+    if([self.resultScreenOutput.text containsString:@"\u221E"]){
         return;
     }
     
     //button animation
     [self animateButtonPress:sender];
 
-    [workingOn setString:self.resultOutput.text];
+    [workingOn setString:self.resultScreenOutput.text];
     self.screenOutput.text = workingOn;
 }
 
@@ -314,22 +312,23 @@
             self.screenOutput.text = workingOn;
         }
         
-        //workingOnFormula is NSExpression
-        workingOnFormula = [NSExpression expressionWithFormat:workingOn];
-        resultFormula = [workingOnFormula expressionValueWithObject:nil context:nil];
-        
+        NSPredicate * parsed = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"1.0 * %@ = 0", workingOn]];
+        NSExpression * left = [(NSComparisonPredicate *)parsed leftExpression];
+        result = [left expressionValueWithObject:nil context:nil];
+         
         //if answer is already shown
-        if([self.resultOutput.text isEqual:[formatter stringForObjectValue:resultFormula]]){
+        if([self.resultScreenOutput.text isEqual:[formatter stringForObjectValue:result]]){
             return;
         }
         
         //button animation
         [self animateButtonPress:sender];
         
-        self.resultOutput.text = [formatter stringForObjectValue:resultFormula];
+        self.resultScreenOutput.text = [formatter stringForObjectValue:result];
         
     }@catch(NSException *e){
         [self clearButton:nil];
+        self.resultScreenOutput.text = @"Syntax Error";
     }@finally{
         
     }
@@ -363,7 +362,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     workingOn = [[NSMutableString alloc] init];
-    workingOnFormula = [[NSExpression alloc] init];
     lastInput = [[NSString alloc] init];
     lastResult = [[NSNumber alloc] init];
     goodLastChar = FALSE;
