@@ -336,7 +336,7 @@
 
 -(BOOL)overCharLimit{
     //limit number of characters to 20
-    if([workingOn length] >= 18){
+    if([workingOn length] >= 15){
         return TRUE;
     }else{
         return FALSE;
@@ -345,7 +345,7 @@
 
 -(void)animateButtonPress:(UIButton *)sender{
         //animates button 25 pixels right and 25 pixels down. Customize
-        CGRect newFrame = CGRectMake(sender.frame.origin.x-2, sender.frame.origin.y-2, sender.frame.size.width, sender.frame.size.height);
+        CGRect newFrame = CGRectMake(sender.frame.origin.x-4, sender.frame.origin.y-4, sender.frame.size.width, sender.frame.size.height);
 
         [UIView animateWithDuration:0.1f
                               delay:0.0f
