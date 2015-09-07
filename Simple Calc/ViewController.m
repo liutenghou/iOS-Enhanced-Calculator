@@ -40,7 +40,7 @@
     
     NSInteger tag = sender.tag;
     //convert to string
-    NSString *tagString = [NSString stringWithFormat:@"%li", tag];
+    NSString *tagString = [NSString stringWithFormat:@"%li", (long)tag];
     
     //button animation
     [self animateButtonPress:sender];
@@ -361,6 +361,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.screenOutput.adjustsFontSizeToFitWidth = YES;
+    
     workingOn = [[NSMutableString alloc] init];
     lastInput = [[NSString alloc] init];
     lastResult = [[NSNumber alloc] init];
